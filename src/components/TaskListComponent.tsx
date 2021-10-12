@@ -14,6 +14,16 @@ const TaskListComponent = () => {
           key={task.id}
         >
           {task.title}
+          <ul>
+            {
+              task.todos.map((todo) =>
+                <li key={todo.id}>
+                  <input type="checkbox" defaultChecked={todo.finished}/>
+                  {todo.title}
+                </li>
+              )
+            }
+          </ul>
         </li>
       ))}
     </ul>
