@@ -16,16 +16,16 @@ describe('App', () => {
   })
 
   it('アプリケーション初期表示時に状態を全件取得する', () => {
-    mock.onGet('/todos').reply(200, [
+    mock.onGet('/tasks').reply(200, [
       {
         id: 1,
         title: 'title#1',
-        finished: false,
+        todos: [],
       },
     ])
 
     render(<App />)
 
-    expect(mock.history.get[0].url).toEqual('/todos')
+    expect(mock.history.get[0].url).toEqual('/tasks')
   })
 })

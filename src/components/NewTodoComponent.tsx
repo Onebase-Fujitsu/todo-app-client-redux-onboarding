@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import {useDispatch} from 'react-redux'
-import {postTodoAction} from '../slices/todoSlice'
+import {postTodoAction} from '../slices/taskSlice'
 
 const NewTodoComponent = () => {
   const [input, setInput] = useState('')

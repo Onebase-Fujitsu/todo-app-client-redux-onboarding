@@ -1,23 +1,23 @@
 import {useSelector} from 'react-redux'
 import {RootState} from '../stores/store'
 
-const TodoListComponent = () => {
-  const todos = useSelector((state: RootState) => state.todos)
+const TaskListComponent = () => {
+  const tasks = useSelector((state: RootState) => state.tasks)
   return (
     <ul
       className="flex grid grid-cols-3 flex-grow"
-      data-testid="TodoListComponent"
+      data-testid="TaskListComponent"
     >
-      {todos.map((todo) => (
+      {tasks.map((task) => (
         <li
           className="bg-yellow-200 px-5 py-3 m-3 shadow-md rounded-md"
-          key={todo.id}
+          key={task.id}
         >
-          {todo.title}
+          {task.title}
         </li>
       ))}
     </ul>
   )
 }
 
-export default TodoListComponent
+export default TaskListComponent

@@ -10,6 +10,6 @@ describe('Index Page', () => {
   it('Indexの画面構成', () => {
     render(<IndexPage />)
     expect(screen.getByTestId('HeaderComponent')).toBeTruthy()
-    expect(screen.getByTestId('TodoListComponent')).toBeTruthy()
+    expect(screen.getByTestId('TaskListComponent')).toBeTruthy()
   })
 })

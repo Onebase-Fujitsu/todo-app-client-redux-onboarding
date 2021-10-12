@@ -2,14 +2,14 @@ import {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
 import {BrowserRouter, Route} from 'react-router-dom'
 import IndexPage from './pages/IndexPage'
-import {getTodosAction} from './slices/todoSlice'
+import {getTasksAction} from './slices/taskSlice'
 import NotFoundPage from './pages/NotFoundPage'
 import NewTodoPage from './pages/NewTodoPage'
 
 function App() {
   const dispatch = useDispatch()
   useEffect(() => {
-    dispatch(getTodosAction())
+    dispatch(getTasksAction())
   }, [])
 
   return (

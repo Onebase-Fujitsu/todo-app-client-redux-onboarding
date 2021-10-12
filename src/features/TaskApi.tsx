@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import {Todo} from '../slices/todoSlice'
+import {Task, Todo} from '../slices/taskSlice'
 
 export const getTodos = async () => {
   const response = await axios.get<Todo[]>('/todos')
@@ -16,5 +16,10 @@ export const postTodo = async (title: string) => {
     requestBody,
     {headers}
   )
+  return response.data
+}
+
+export const getTasks = async () => {
+  const response = await axios.get<Task[]>('/tasks')
   return response.data
 }
