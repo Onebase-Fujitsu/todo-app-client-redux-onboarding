@@ -1,6 +1,6 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import {getTasks, getTodos, postTodo} from '../../features/TaskApi'
+import {getTasks, postTodo} from '../../features/TaskApi'
 
 describe('Task API', () => {
   let mock: MockAdapter
@@ -28,25 +28,6 @@ describe('Task API', () => {
       expect(response[0].id).toEqual(1)
       expect(response[0].title).toEqual('title#1')
       expect(response[0].todos.length).toEqual(0)
-    })
-  })
-
-  describe('GET /todos', () => {
-    it('タスクを全件取得する', async () => {
-      mock.onGet('/todos').reply(200, [
-        {
-          id: 1,
-          title: 'title#1',
-          finished: false,
-        },
-      ])
-
-      const response = await getTodos()
-
-      expect(mock.history.get[0].url).toEqual('/todos')
-      expect(response[0].id).toEqual(1)
-      expect(response[0].title).toEqual('title#1')
-      expect(response[0].finished).toEqual(false)
     })
   })
 

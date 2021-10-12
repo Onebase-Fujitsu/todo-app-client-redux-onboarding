@@ -1,11 +1,6 @@
 import axios, {AxiosResponse} from 'axios'
 import {Task, Todo} from '../slices/taskSlice'
 
-export const getTodos = async () => {
-  const response = await axios.get<Todo[]>('/todos')
-  return response.data
-}
-
 export const postTodo = async (title: string) => {
   const requestBody = JSON.stringify({title})
   const headers = {
