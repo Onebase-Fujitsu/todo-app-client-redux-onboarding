@@ -1,18 +1,18 @@
 import {useState} from 'react'
 import {useDispatch} from 'react-redux'
-import {postTodoAction} from '../slices/taskSlice'
+import {postTaskAction} from '../slices/taskSlice'
 
-const NewTodoComponent = () => {
+const NewTaskComponent = () => {
   const [input, setInput] = useState('')
   const dispatch = useDispatch()
 
   const onclickCreateButton = async () => {
-    dispatch(postTodoAction({title: input}))
+    dispatch(postTaskAction({title: input}))
     setInput('')
   }
 
   return (
-    <div data-testid="NewTodoComponent" className="m-3">
+    <div data-testid="NewTaskComponent" className="m-3">
       <label
         htmlFor="titleInput"
         className="text-md font-normal leading-normal mt-0 mb-2"
@@ -36,4 +36,4 @@ const NewTodoComponent = () => {
   )
 }
 
-export default NewTodoComponent
+export default NewTaskComponent

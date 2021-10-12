@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import {getTasks, postTodo} from '../features/TaskApi'
+import {getTasks, postTask} from '../features/TaskApi'
 
 export interface Todo {
   id: number
@@ -18,9 +18,9 @@ export const getTasksAction = createAsyncThunk<Task[]>(
   async (): Promise<Task[]> => getTasks()
 )
 
-export const postTodoAction = createAsyncThunk<Todo, {title: string}>(
-  'post /todos',
-  async (arg): Promise<Todo> => postTodo(arg.title)
+export const postTaskAction = createAsyncThunk<Task, {title: string}>(
+  'post /task',
+  async (arg): Promise<Task> => postTask(arg.title)
 )
 
 export const taskSlice = createSlice({
@@ -28,7 +28,9 @@ export const taskSlice = createSlice({
   initialState: [] as Task[],
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getTasksAction.fulfilled, (state, action) => action.payload)}
+    builder.addCase(getTasksAction.fulfilled, (state, action) => action.payload)
+    builder.addCase(postTaskAction.fulfilled, (state, action) => {state.push(action.payload)})
+  }
 })
 
 export default taskSlice

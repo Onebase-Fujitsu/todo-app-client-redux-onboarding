@@ -2,7 +2,7 @@ import {screen} from '@testing-library/react'
 import {render} from '../../test-utils'
 import TaskListComponent from '../../components/TaskListComponent'
 
-describe('TodoListComponent', () => {
+describe('TaskListComponent', () => {
   it('Stateが空だったらリストは表示されない', () => {
     render(<TaskListComponent />, {preloadedState: {tasks: []}})
     expect(screen.queryByRole('listitem')).toBeFalsy()

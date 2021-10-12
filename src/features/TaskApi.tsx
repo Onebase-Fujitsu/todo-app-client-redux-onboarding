@@ -1,13 +1,13 @@
 import axios, {AxiosResponse} from 'axios'
-import {Task, Todo} from '../slices/taskSlice'
+import {Task} from '../slices/taskSlice'
 
-export const postTodo = async (title: string) => {
+export const postTask = async (title: string) => {
   const requestBody = JSON.stringify({title})
   const headers = {
     'Content-Type': 'application/json',
   }
-  const response: AxiosResponse<Todo> = await axios.post(
-    '/todos',
+  const response: AxiosResponse<Task> = await axios.post(
+    '/tasks',
     requestBody,
     {headers}
   )

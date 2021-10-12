@@ -14,9 +14,9 @@ const HeaderComponent = () => (
       <FontAwesomeIcon className="mr-2" icon={faList} />
       Todo List
     </Link>
-    <Link to="/newTodo" className="p-3">
+    <Link to="/newTask" className="p-3">
       <FontAwesomeIcon className="mr-2" icon={faEdit} />
-      New Todo
+      New Task
     </Link>
   </div>
 )

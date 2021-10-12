@@ -1,11 +1,11 @@
 import HeaderComponent from '../components/HeaderComponent'
-import NewTodoComponent from '../components/NewTodoComponent'
+import NewTaskComponent from '../components/NewTaskComponent'
 
-const NewTodoPage = () => (
+const NewTaskPage = () => (
   <div className="flex flex-row items-start">
     <HeaderComponent />
-    <NewTodoComponent />
+    <NewTaskComponent />
   </div>
 )
 
-export default NewTodoPage
+export default NewTaskPage

@@ -2,10 +2,10 @@ import {cleanup, screen} from '@testing-library/react'
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 import userEvent from '@testing-library/user-event'
-import NewTodoComponent from '../../components/NewTodoComponent'
+import NewTaskComponent from '../../components/NewTaskComponent'
 import {render} from '../../test-utils'
 
-describe('NewTodoComponent', () => {
+describe('NewTaskComponent', () => {
   let mock: MockAdapter
 
   beforeEach(() => {
@@ -17,8 +17,8 @@ describe('NewTodoComponent', () => {
     cleanup()
   })
 
-  it('NewTodoの初期表示', () => {
-    render(<NewTodoComponent />)
+  it('NewTaskの初期表示', () => {
+    render(<NewTaskComponent />)
     expect(screen.getByText('Title')).toBeTruthy()
     expect(screen.getByRole('textbox')).toBeTruthy()
     expect(screen.getByRole('button')).toHaveTextContent('Create')
@@ -31,10 +31,10 @@ describe('NewTodoComponent', () => {
       finished: false,
     }
     mock.onPost('/todos').reply(201, responseBody)
-    render(<NewTodoComponent />)
+    render(<NewTaskComponent />)
     userEvent.type(screen.getByRole('textbox'), 'title#1')
     userEvent.click(screen.getByRole('button'))
-    expect(mock.history.post[0].url).toEqual('/todos')
+    expect(mock.history.post[0].url).toEqual('/tasks')
     const request = {
       title: 'title#1',
     }

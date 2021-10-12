@@ -15,10 +15,10 @@ describe('HeaderComponent Component', () => {
       'href',
       'http://localhost/'
     )
-    expect(screen.getAllByRole('link')[1]).toHaveTextContent('New Todo')
+    expect(screen.getAllByRole('link')[1]).toHaveTextContent('New Task')
     expect(screen.getAllByRole('link')[1]).toHaveProperty(
       'href',
-      'http://localhost/newTodo'
+      'http://localhost/newTask'
     )
   })
 })

@@ -1,15 +1,15 @@
 import {cleanup, screen} from '@testing-library/react'
 import {render} from '../../test-utils'
-import NewTodoPage from '../../pages/NewTodoPage'
+import NewTaskPage from '../../pages/NewTaskPage'
 
-describe('New Todo Page', () => {
+describe('New Task Page', () => {
   afterEach(() => {
     cleanup()
   })
 
   it('New Todoの画面構成', () => {
-    render(<NewTodoPage />)
+    render(<NewTaskPage />)
     expect(screen.getByTestId('HeaderComponent')).toBeTruthy()
-    expect(screen.getByTestId('NewTodoComponent')).toBeTruthy()
+    expect(screen.getByTestId('NewTaskComponent')).toBeTruthy()
   })
 })

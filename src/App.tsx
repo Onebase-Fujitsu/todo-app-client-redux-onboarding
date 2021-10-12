@@ -4,7 +4,7 @@ import {BrowserRouter, Route} from 'react-router-dom'
 import IndexPage from './pages/IndexPage'
 import {getTasksAction} from './slices/taskSlice'
 import NotFoundPage from './pages/NotFoundPage'
-import NewTodoPage from './pages/NewTodoPage'
+import NewTaskPage from './pages/NewTaskPage'
 
 function App() {
   const dispatch = useDispatch()
@@ -16,7 +16,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Route exact path="/" component={IndexPage} />
-        <Route exact path="/newTodo" component={NewTodoPage} />
+        <Route exact path="/newTodo" component={NewTaskPage} />
         <Route component={NotFoundPage} />
       </BrowserRouter>
     </div>
