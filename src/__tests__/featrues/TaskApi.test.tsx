@@ -39,12 +39,35 @@ describe('Task API', () => {
         todos: []
       })
 
-      const response = await postTask('title#1')
+      const response = await postTask('title#1', [])
 
       expect(mock.history.post[0].url).toEqual('/tasks')
+      expect(mock.history.post[0].data).toEqual(JSON.stringify({title: "title#1", todos: []}))
       expect(response.id).toEqual(1)
       expect(response.title).toEqual('title#1')
       expect(response.todos.length).toEqual(0)
+    })
+
+    it("todoを設定してタスクを追加する", async () => {
+      mock.onPost('/tasks').reply(201, {
+        id: 1,
+        title: 'title#1',
+        todos: [{
+          id: 1,
+          title: "todo#1",
+          finished: false
+        }]
+      })
+
+      const response = await postTask("title#1", ["todo#1"])
+      expect(mock.history.post[0].url).toEqual('/tasks')
+      expect(mock.history.post[0].data).toEqual(JSON.stringify({title: "title#1", todos: ["todo#1"]}))
+      expect(response.id).toEqual(1)
+      expect(response.title).toEqual('title#1')
+      expect(response.todos.length).toEqual(1)
+      expect(response.todos[0].id).toEqual(1)
+      expect(response.todos[0].title).toEqual("todo#1")
+      expect(response.todos[0].finished).toEqual(false)
     })
   })
 })

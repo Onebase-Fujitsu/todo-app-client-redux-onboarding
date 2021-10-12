@@ -18,9 +18,9 @@ export const getTasksAction = createAsyncThunk<Task[]>(
   async (): Promise<Task[]> => getTasks()
 )
 
-export const postTaskAction = createAsyncThunk<Task, {title: string}>(
+export const postTaskAction = createAsyncThunk<Task, {title: string, todos: string[]}>(
   'post /task',
-  async (arg): Promise<Task> => postTask(arg.title)
+  async (arg): Promise<Task> => postTask(arg.title, arg.todos)
 )
 
 export const taskSlice = createSlice({

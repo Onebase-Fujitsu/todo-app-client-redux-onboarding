@@ -1,6 +1,6 @@
 import {useEffect} from 'react'
 import {useDispatch} from 'react-redux'
-import {BrowserRouter, Route} from 'react-router-dom'
+import {BrowserRouter, Route, Switch} from 'react-router-dom'
 import IndexPage from './pages/IndexPage'
 import {getTasksAction} from './slices/taskSlice'
 import NotFoundPage from './pages/NotFoundPage'
@@ -15,9 +15,11 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <Route exact path="/" component={IndexPage} />
-        <Route exact path="/newTodo" component={NewTaskPage} />
-        <Route component={NotFoundPage} />
+        <Switch>
+          <Route exact path="/" component={IndexPage}/>
+          <Route exact path="/newTask" component={NewTaskPage}/>
+          <Route component={NotFoundPage}/>
+        </Switch>
       </BrowserRouter>
     </div>
   )

@@ -2,7 +2,7 @@ import {render as rtlRender} from '@testing-library/react'
 import {configureStore} from '@reduxjs/toolkit'
 import {Provider} from 'react-redux'
 import taskSlice from './slices/taskSlice'
-import {BrowserRouter} from 'react-router-dom'
+import {BrowserRouter, Switch} from 'react-router-dom'
 
 function render(
   ui,
@@ -18,7 +18,7 @@ function render(
   function Wrapper({children}) {
     return (
       <Provider store={store}>
-        <BrowserRouter>{children}</BrowserRouter>
+        <BrowserRouter><Switch>{children}</Switch></BrowserRouter>
       </Provider>
     )
   }

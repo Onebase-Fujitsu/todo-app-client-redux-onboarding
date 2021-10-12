@@ -1,8 +1,8 @@
 import axios, {AxiosResponse} from 'axios'
 import {Task} from '../slices/taskSlice'
 
-export const postTask = async (title: string) => {
-  const requestBody = JSON.stringify({title})
+export const postTask = async (title: string, todos: string[]) => {
+  const requestBody = JSON.stringify({title, todos})
   const headers = {
     'Content-Type': 'application/json',
   }
