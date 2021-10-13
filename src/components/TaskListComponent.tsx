@@ -18,7 +18,7 @@ const TaskListComponent = () => {
           key={task.id}
         >
           <div className="text-xl">{task.title}</div>
-          <div>{dayjs(task.createdAt).format('YYYY年MM月DD日HH時mm分ss秒')}</div>
+            <div className="text-sm">作成日:{dayjs(task.createdAt).format('YYYY年MM月DD日HH時mm分ss秒')}</div>
           <ul>
             {task.todos.map((todo) => (
               <li key={todo.id}>
