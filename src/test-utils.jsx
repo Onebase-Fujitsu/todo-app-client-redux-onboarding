@@ -18,7 +18,9 @@ function render(
   function Wrapper({children}) {
     return (
       <Provider store={store}>
-        <BrowserRouter><Switch>{children}</Switch></BrowserRouter>
+        <BrowserRouter>
+          <Switch>{children}</Switch>
+        </BrowserRouter>
       </Provider>
     )
   }

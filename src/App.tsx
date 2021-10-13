@@ -16,9 +16,9 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" component={IndexPage}/>
-          <Route exact path="/newTask" component={NewTaskPage}/>
-          <Route component={NotFoundPage}/>
+          <Route exact path="/" component={IndexPage} />
+          <Route exact path="/newTask" component={NewTaskPage} />
+          <Route component={NotFoundPage} />
         </Switch>
       </BrowserRouter>
     </div>

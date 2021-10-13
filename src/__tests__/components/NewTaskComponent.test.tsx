@@ -20,17 +20,17 @@ describe('NewTaskComponent', () => {
   it('NewTaskの初期表示', () => {
     render(<NewTaskComponent />)
     expect(screen.getByText('Title')).toBeTruthy()
-    expect(screen.getByRole('textbox', {name: "taskTitleInput"})).toBeTruthy()
+    expect(screen.getByRole('textbox', {name: 'taskTitleInput'})).toBeTruthy()
     expect(screen.getByText('Todo')).toBeTruthy()
-    expect(screen.queryByRole('textbox', {name: "todoTitleInput"})).toBeNull()
-    expect(screen.getByRole('button', {name: "todoAddButton"})).toBeTruthy()
-    expect(screen.getByRole("button", {name: "createButton"})).toBeTruthy()
+    expect(screen.queryByRole('textbox', {name: 'todoTitleInput'})).toBeNull()
+    expect(screen.getByRole('button', {name: 'todoAddButton'})).toBeTruthy()
+    expect(screen.getByRole('button', {name: 'createButton'})).toBeTruthy()
   })
 
-  it("Todo追加ボタンをクリックするとTodo名入力欄が表示される", () => {
+  it('Todo追加ボタンをクリックするとTodo名入力欄が表示される', () => {
     render(<NewTaskComponent />)
-    userEvent.click(screen.getByRole("button", {name: "todoAddButton"}))
-    expect(screen.getByRole("textbox", {name: "todoTitleInput"})).toBeTruthy()
+    userEvent.click(screen.getByRole('button', {name: 'todoAddButton'}))
+    expect(screen.getByRole('textbox', {name: 'todoTitleInput'})).toBeTruthy()
   })
 
   it('タイトルを入力した後作成ボタンをクリックするとテキストボックスが空欄に戻る', () => {
@@ -42,11 +42,11 @@ describe('NewTaskComponent', () => {
     mock.onPost('/todos').reply(201, responseBody)
     render(<NewTaskComponent />)
     userEvent.type(screen.getByRole('textbox'), 'title#1')
-    userEvent.click(screen.getByRole("button", {name: "createButton"}))
+    userEvent.click(screen.getByRole('button', {name: 'createButton'}))
     expect(mock.history.post[0].url).toEqual('/tasks')
     const request = {
       title: 'title#1',
-      todos: []
+      todos: [],
     }
     expect(mock.history.post[0].data).toEqual(JSON.stringify(request))
     expect(screen.getByRole('textbox')).toHaveTextContent('')

@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
-import {getTasks, postTask} from '../features/TaskApi'
+import {getTasks, patchTodo, postTask} from '../features/TaskApi'
 
 export interface Todo {
   id: number
@@ -18,9 +18,18 @@ export const getTasksAction = createAsyncThunk<Task[]>(
   async (): Promise<Task[]> => getTasks()
 )
 
-export const postTaskAction = createAsyncThunk<Task, {title: string, todos: string[]}>(
-  'post /task',
-  async (arg): Promise<Task> => postTask(arg.title, arg.todos)
+export const postTaskAction = createAsyncThunk<
+  Task,
+  {title: string; todos: string[]}
+>('post /tasks', async (arg): Promise<Task> => postTask(arg.title, arg.todos))
+
+export const patchTodoAction = createAsyncThunk<
+  Todo,
+  {taskId: number; todoId: number; title?: string; finished?: boolean}
+>(
+  'patch /tasks/taskid/todos/todoid',
+  async (arg): Promise<Todo> =>
+    patchTodo(arg.taskId, arg.todoId, arg.title, arg.finished)
 )
 
 export const taskSlice = createSlice({
@@ -29,8 +38,24 @@ export const taskSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getTasksAction.fulfilled, (state, action) => action.payload)
-    builder.addCase(postTaskAction.fulfilled, (state, action) => {state.push(action.payload)})
-  }
+    builder.addCase(postTaskAction.fulfilled, (state, action) => {
+      state.push(action.payload)
+    })
+    builder.addCase(patchTodoAction.fulfilled, (state, action) => {
+      state.map((task) => {
+        const newTask = task
+        newTask.todos = task.todos.map((todo) => {
+          const newTodo = todo
+          if (todo.id === action.payload.id) {
+            newTodo.title = action.payload.title
+            newTodo.finished = action.payload.finished
+          }
+          return newTodo
+        })
+        return newTask
+      })
+    })
+  },
 })
 
 export default taskSlice
