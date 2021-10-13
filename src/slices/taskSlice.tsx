@@ -11,6 +11,7 @@ export interface Task {
   id: number
   title: string
   todos: Todo[]
+  createdAt: string
 }
 
 export const getTasksAction = createAsyncThunk<Task[]>(

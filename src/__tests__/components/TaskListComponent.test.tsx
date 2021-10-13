@@ -29,6 +29,7 @@ describe('TaskListComponent', () => {
         id: 1,
         title: 'title#1',
         todos: [],
+        createdAt: "2021-10-13T01:08:14.984Z"
       },
       {
         id: 2,
@@ -37,11 +38,14 @@ describe('TaskListComponent', () => {
           {id: 1, title: 'todo#1', finished: true},
           {id: 2, title: 'todo#2', finished: false},
         ],
+        createdAt: "2021-10-12T21:08:14.984Z"
       },
     ]
     render(<TaskListComponent />, {preloadedState: {tasks: initialTasks}})
     expect(screen.getAllByRole('listitem')[0]).toHaveTextContent('title#1')
+    expect(screen.getAllByRole('listitem')[0]).toHaveTextContent('2021年10月13日10時08分14秒')
     expect(screen.getAllByRole('listitem')[1]).toHaveTextContent('title#2')
+    expect(screen.getAllByRole('listitem')[1]).toHaveTextContent('2021年10月13日06時08分14秒')
     expect(screen.getAllByRole('listitem')[1]).toHaveTextContent('todo#1')
     expect(screen.getAllByRole('listitem')[1]).toHaveTextContent('todo#2')
     expect(screen.getAllByRole('checkbox')[0]).toBeChecked()
