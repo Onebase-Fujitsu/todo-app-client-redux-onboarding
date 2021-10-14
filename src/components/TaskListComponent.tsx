@@ -1,6 +1,6 @@
 import {useSelector} from 'react-redux'
 import {RootState} from '../stores/store'
-import TaskItemComponent from "./TaskItemComponent.";
+import TaskItemComponent from './TaskItemComponent.'
 
 const TaskListComponent = () => {
   const tasks = useSelector((state: RootState) => state.tasks)

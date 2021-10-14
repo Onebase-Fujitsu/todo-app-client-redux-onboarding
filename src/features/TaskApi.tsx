@@ -28,12 +28,9 @@ export const getTasks = async () => {
   return response.data
 }
 
-export const patchTask = async (
-  taskId: number,
-  title: string
-) => {
+export const patchTask = async (taskId: number, title: string) => {
   const headers = {
-    'Content-Type' : 'application/json',
+    'Content-Type': 'application/json',
   }
   const json: taskPatchRequest = {title}
   const requestBody = JSON.stringify(json)

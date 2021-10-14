@@ -29,11 +29,10 @@ export const postTaskAction = createAsyncThunk<
 
 export const patchTaskAction = createAsyncThunk<
   Task,
-  {taskId: number, title: string}
-  >(
-    'patch /tasks/taskId',
-  async (arg): Promise<Task> =>
-    patchTask(arg.taskId, arg.title)
+  {taskId: number; title: string}
+>(
+  'patch /tasks/taskId',
+  async (arg): Promise<Task> => patchTask(arg.taskId, arg.title)
 )
 export const patchTodoAction = createAsyncThunk<
   Todo,
@@ -43,6 +42,26 @@ export const patchTodoAction = createAsyncThunk<
   async (arg): Promise<Todo> =>
     patchTodo(arg.taskId, arg.todoId, arg.title, arg.finished)
 )
+
+export const selectTodoById = (
+  tasks: Task[],
+  taskId: number,
+  todoId: number
+) => {
+  let returnTodo = {} as Todo
+  tasks.map((task) => {
+    if (task.id === taskId) {
+      task.todos.map((todo) => {
+        if (todo.id === todoId) {
+          returnTodo = todo
+        }
+        return null
+      })
+    }
+    return null
+  })
+  return returnTodo
+}
 
 export const taskSlice = createSlice({
   name: 'tasks',
@@ -72,12 +91,11 @@ export const taskSlice = createSlice({
     builder.addCase(patchTaskAction.fulfilled, (state, action) => {
       state.map((task) => {
         const newTask = task
-        if(task.id === action.payload.id) {
+        if (task.id === action.payload.id) {
           newTask.title = action.payload.title
         }
         return newTask
-        }
-      )
+      })
     })
   },
 })
