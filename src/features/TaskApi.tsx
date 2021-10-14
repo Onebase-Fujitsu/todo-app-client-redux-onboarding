@@ -6,6 +6,10 @@ interface todoPatchRequest {
   finished?: boolean
 }
 
+interface taskPatchRequest {
+  title: string
+}
+
 export const postTask = async (title: string, todos: string[]) => {
   const requestBody = JSON.stringify({title, todos})
   const headers = {
@@ -24,6 +28,22 @@ export const getTasks = async () => {
   return response.data
 }
 
+export const patchTask = async (
+  taskId: number,
+  title: string
+) => {
+  const headers = {
+    'Content-Type' : 'application/json',
+  }
+  const json: taskPatchRequest = {title}
+  const requestBody = JSON.stringify(json)
+  const response: AxiosResponse<Task> = await axios.patch(
+    `/tasks/${taskId}`,
+    requestBody,
+    {headers}
+  )
+  return response.data
+}
 export const patchTodo = async (
   taskId: number,
   todoId: number,

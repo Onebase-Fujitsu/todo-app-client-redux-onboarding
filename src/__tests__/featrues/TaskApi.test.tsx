@@ -1,6 +1,6 @@
 import axios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
-import {getTasks, patchTodo, postTask} from '../../features/TaskApi'
+import {getTasks, patchTask, patchTodo, postTask} from '../../features/TaskApi'
 
 describe('Task API', () => {
   let mock: MockAdapter
@@ -127,6 +127,24 @@ describe('Task API', () => {
       expect(response.id).toEqual(1)
       expect(response.title).toEqual('todo#1 updated')
       expect(response.finished).toEqual(true)
+    })
+
+    it('taskのタイトルを変更する', async () => {
+      mock.onPatch('/tasks/1').reply(200, {
+        id: 1,
+        title: 'task#1 updated',
+        createdAt: "2021-10-14T00:39:01.341+00:00",
+        updatedAt: "2021-10-15T00:39:01.341+00:00",
+        }
+      )
+
+      const response = await patchTask(1,'task#1 updated')
+      expect(mock.history.patch[0].url).toEqual('/tasks/1')
+      expect(mock.history.patch[0].data).toEqual(JSON.stringify({title: 'task#1 updated'}))
+      expect(response.id).toEqual(1)
+      expect(response.title).toEqual('task#1 updated')
+      expect(response.createdAt).toEqual("2021-10-14T00:39:01.341+00:00")
+      expect(response.updatedAt).toEqual("2021-10-15T00:39:01.341+00:00")
     })
   })
 })
