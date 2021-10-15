@@ -1,5 +1,7 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit'
+import {createAsyncThunk, createEntityAdapter, createSlice, EntityState} from '@reduxjs/toolkit'
+// import {schema} from "normalizr";
 import {getTasks, patchTask, patchTodo, postTask} from '../features/TaskApi'
+import {RootState} from "../stores/store";
 
 export interface Todo {
   id: number
@@ -17,87 +19,61 @@ export interface Task {
   updatedAt: string
 }
 
+export interface TaskEntity {
+  id: number
+  title: string
+  todos: EntityState<Todo>
+  createdAt: string
+  updatedAt: string
+}
+
+const tasksAdapter = createEntityAdapter<TaskEntity>({})
+const todosAdapter = createEntityAdapter<Todo>({})
+
+export const taskSelectors = tasksAdapter.getSelectors(
+  (state: RootState) => state.tasks
+);
+
 export const getTasksAction = createAsyncThunk<Task[]>(
   'get /tasks',
   async (): Promise<Task[]> => getTasks()
 )
 
-export const postTaskAction = createAsyncThunk<
-  Task,
-  {title: string; todos: string[]}
->('post /tasks', async (arg): Promise<Task> => postTask(arg.title, arg.todos))
+export const postTaskAction = createAsyncThunk<Task,
+  { title: string; todos: string[] }>('post /tasks', async (arg): Promise<Task> => postTask(arg.title, arg.todos))
 
-export const patchTaskAction = createAsyncThunk<
-  Task,
-  {taskId: number; title: string}
->(
+export const patchTaskAction = createAsyncThunk<Task,
+  { taskId: number; title: string }>(
   'patch /tasks/taskId',
   async (arg): Promise<Task> => patchTask(arg.taskId, arg.title)
 )
-export const patchTodoAction = createAsyncThunk<
-  Todo,
-  {taskId: number; todoId: number; title?: string; finished?: boolean}
->(
+export const patchTodoAction = createAsyncThunk<Todo,
+  { taskId: number; todoId: number; title?: string; finished?: boolean }>(
   'patch /tasks/taskid/todos/todoid',
   async (arg): Promise<Todo> =>
     patchTodo(arg.taskId, arg.todoId, arg.title, arg.finished)
 )
 
-export const selectTodoById = (
-  tasks: Task[],
-  taskId: number,
-  todoId: number
-) => {
-  let returnTodo = {} as Todo
-  tasks.map((task) => {
-    if (task.id === taskId) {
-      task.todos.map((todo) => {
-        if (todo.id === todoId) {
-          returnTodo = todo
-        }
-        return null
-      })
-    }
-    return null
-  })
-  return returnTodo
-}
-
 export const taskSlice = createSlice({
   name: 'tasks',
-  initialState: [] as Task[],
+  initialState: tasksAdapter.getInitialState(),
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getTasksAction.fulfilled, (state, action) => action.payload)
-    builder.addCase(postTaskAction.fulfilled, (state, action) => {
-      state.push(action.payload)
-    })
-    builder.addCase(patchTodoAction.fulfilled, (state, action) => {
-      state.map((task) => {
-        const newTask = task
-        newTask.todos = task.todos.map((todo) => {
-          const newTodo = todo
-          if (todo.id === action.payload.id) {
-            newTodo.title = action.payload.title
-            newTodo.finished = action.payload.finished
-            newTodo.updatedAt = action.payload.updatedAt
-            newTask.updatedAt = action.payload.updatedAt
-          }
-          return newTodo
-        })
-        return newTask
-      })
-    })
-    builder.addCase(patchTaskAction.fulfilled, (state, action) => {
-      state.map((task) => {
-        const newTask = task
-        if (task.id === action.payload.id) {
-          newTask.title = action.payload.title
+    builder.addCase(getTasksAction.fulfilled, (state, action) => {
+      action.payload.map((task) => {
+        const todos = todosAdapter.getInitialState()
+        const taskEntry: TaskEntity = {
+          id: task.id,
+          title: task.title,
+          todos: todosAdapter.addMany(todos, task.todos),
+          createdAt: task.createdAt,
+          updatedAt: task.updatedAt
         }
-        return newTask
+        tasksAdapter.addOne(state, taskEntry)
+        return null
       })
     })
-  },
+  }
 })
 
 export default taskSlice
