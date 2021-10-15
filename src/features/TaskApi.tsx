@@ -1,4 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
+import {EntityId} from "@reduxjs/toolkit";
 import {Task, Todo} from '../slices/taskSlice'
 
 interface todoPatchRequest {
@@ -28,7 +29,7 @@ export const getTasks = async () => {
   return response.data
 }
 
-export const patchTask = async (taskId: number, title: string) => {
+export const patchTask = async (taskId: EntityId, title: string) => {
   const headers = {
     'Content-Type': 'application/json',
   }
@@ -42,8 +43,8 @@ export const patchTask = async (taskId: number, title: string) => {
   return response.data
 }
 export const patchTodo = async (
-  taskId: number,
-  todoId: number,
+  taskId: EntityId,
+  todoId: EntityId,
   title?: string,
   finished?: boolean
 ) => {
