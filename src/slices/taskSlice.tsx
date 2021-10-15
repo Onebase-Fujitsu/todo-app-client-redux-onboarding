@@ -61,22 +61,12 @@ export const patchTodoAction = createAsyncThunk<Todo,
 
 export const taskSlice = createSlice({
   name: 'tasks',
-  initialState: tasksAdapter.getInitialState(),
+  initialState: {domainData: {tasks: tasksAdapter.getInitialState(), todos: todosAdapter.getInitialState()}},
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getTasksAction.fulfilled, (state, action) => {
-      tasksAdapter.setMany(state, action.payload.entities.tasks)
-    })
-  }
-})
-
-export const todoSlice = createSlice({
-  name: 'todos',
-  initialState: todosAdapter.getInitialState(),
-  reducers: {},
-  extraReducers: (builder) => {
-    builder.addCase(getTasksAction.fulfilled, (state, action) => {
-      todosAdapter.addMany(state, action.payload.entities.todos)
+      tasksAdapter.setMany(state.domainData.tasks, action.payload.entities.tasks)
+      todosAdapter.setMany(state.domainData.todos, action.payload.entities.todos)
     })
   }
 })

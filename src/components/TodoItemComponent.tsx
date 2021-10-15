@@ -11,7 +11,7 @@ interface Props {
 
 const TodoItemComponent = (props: Props) => {
   const {taskId, todoId} = props
-  const todo = useSelector((state:RootState) => state.todos.entities[props.todoId])
+  const todo = useSelector((state:RootState) => state.tasks.domainData.todos.entities[props.todoId])
 
   const dispatch = useDispatch()
   const [isTitleEdit, setIsTitleEdit] = useState(false)

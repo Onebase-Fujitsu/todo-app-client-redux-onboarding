@@ -17,7 +17,7 @@ interface Props {
 }
 
 const TaskItemComponent = (props: Props) => {
-  const task = useSelector((state: RootState) => state.tasks.entities[props.taskId])
+  const task = useSelector((state: RootState) => state.tasks.domainData.tasks.entities[props.taskId])
   const [isTitleEdit, setIsTitleEdit] = useState(false)
   const [inputTaskTitle, setInputTaskTitle] = useState(task?.title)
   const dispatch = useDispatch()

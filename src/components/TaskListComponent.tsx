@@ -3,7 +3,7 @@ import TaskItemComponent from './TaskItemComponent'
 import {RootState} from "../stores/store";
 
 const TaskListComponent = () => {
-  const taskIds = useSelector((state: RootState) => state.tasks.ids)
+  const taskIds = useSelector((state: RootState) => state.tasks.domainData.tasks.ids)
   return (
     <ul
       className="flex grid grid-cols-3 flex-grow"
