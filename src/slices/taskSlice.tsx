@@ -1,7 +1,6 @@
 import {createAsyncThunk, createEntityAdapter, createSlice, EntityState} from '@reduxjs/toolkit'
-// import {schema} from "normalizr";
+import {normalize, schema} from "normalizr";
 import {getTasks, patchTask, patchTodo, postTask} from '../features/TaskApi'
-import {RootState} from "../stores/store";
 
 export interface Todo {
   id: number
@@ -27,16 +26,23 @@ export interface TaskEntity {
   updatedAt: string
 }
 
-const tasksAdapter = createEntityAdapter<TaskEntity>({})
-const todosAdapter = createEntityAdapter<Todo>({})
+const todoSchema = new schema.Entity("todos", {})
+const taskSchema = new schema.Entity("tasks", {todos: [todoSchema]})
+const tasksAdapter = createEntityAdapter<Task>()
+const todosAdapter = createEntityAdapter<Todo>()
 
-export const taskSelectors = tasksAdapter.getSelectors(
-  (state: RootState) => state.tasks
-);
-
-export const getTasksAction = createAsyncThunk<Task[]>(
+export const getTasksAction = createAsyncThunk(
   'get /tasks',
-  async (): Promise<Task[]> => getTasks()
+  async () => {
+    const tasks = await getTasks()
+
+
+    return normalize<any,
+      {
+        tasks: Task[],
+        todos: Todo[]
+      }>(tasks, [taskSchema])
+  }
 )
 
 export const postTaskAction = createAsyncThunk<Task,
@@ -60,18 +66,18 @@ export const taskSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getTasksAction.fulfilled, (state, action) => {
-      action.payload.map((task) => {
-        const todos = todosAdapter.getInitialState()
-        const taskEntry: TaskEntity = {
-          id: task.id,
-          title: task.title,
-          todos: todosAdapter.addMany(todos, task.todos),
-          createdAt: task.createdAt,
-          updatedAt: task.updatedAt
-        }
-        tasksAdapter.addOne(state, taskEntry)
-        return null
-      })
+      tasksAdapter.setMany(state, action.payload.entities.tasks)
+    })
+  }
+})
+
+export const todoSlice = createSlice({
+  name: 'todos',
+  initialState: todosAdapter.getInitialState(),
+  reducers: {},
+  extraReducers: (builder) => {
+    builder.addCase(getTasksAction.fulfilled, (state, action) => {
+      todosAdapter.addMany(state, action.payload.entities.todos)
     })
   }
 })
