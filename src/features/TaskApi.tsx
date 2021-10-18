@@ -1,5 +1,5 @@
 import axios, {AxiosResponse} from 'axios'
-import {EntityId} from "@reduxjs/toolkit";
+import {EntityId} from '@reduxjs/toolkit'
 import {Task, Todo} from '../slices/taskSlice'
 
 interface todoPatchRequest {

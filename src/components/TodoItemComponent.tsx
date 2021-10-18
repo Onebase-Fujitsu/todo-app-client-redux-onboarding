@@ -1,8 +1,8 @@
-import {EntityId} from "@reduxjs/toolkit";
-import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import {RootState} from "../stores/store";
-import {patchTodoAction} from "../slices/taskSlice";
+import {EntityId} from '@reduxjs/toolkit'
+import {useDispatch, useSelector} from 'react-redux'
+import {useState} from 'react'
+import {RootState} from '../stores/store'
+import {patchTodoAction} from '../slices/taskSlice'
 
 interface Props {
   taskId: EntityId
@@ -11,7 +11,9 @@ interface Props {
 
 const TodoItemComponent = (props: Props) => {
   const {taskId, todoId} = props
-  const todo = useSelector((state:RootState) => state.tasks.domainData.todos.entities[props.todoId])
+  const todo = useSelector(
+    (state: RootState) => state.tasks.domainData.todos.entities[props.todoId]
+  )
 
   const dispatch = useDispatch()
   const [isTitleEdit, setIsTitleEdit] = useState(false)

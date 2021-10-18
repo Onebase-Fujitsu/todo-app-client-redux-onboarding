@@ -1,23 +1,19 @@
-// import {useDispatch, useSelector} from 'react-redux'
-// import {useState} from 'react'
-// import dayjs from 'dayjs'
-// import {patchTaskAction} from '../slices/taskSlice'
-// import {RootState} from '../stores/store'
-//
-import {EntityId} from "@reduxjs/toolkit";
-import {useDispatch, useSelector} from "react-redux";
-import {useState} from "react";
-import dayjs from "dayjs";
-import {RootState} from "../stores/store";
-import {patchTaskAction} from "../slices/taskSlice";
-import TodoItemComponent from "./TodoItemComponent";
+import {EntityId} from '@reduxjs/toolkit'
+import {useDispatch, useSelector} from 'react-redux'
+import {useState} from 'react'
+import dayjs from 'dayjs'
+import {RootState} from '../stores/store'
+import {patchTaskAction} from '../slices/taskSlice'
+import TodoItemComponent from './TodoItemComponent'
 
 interface Props {
   taskId: EntityId
 }
 
 const TaskItemComponent = (props: Props) => {
-  const task = useSelector((state: RootState) => state.tasks.domainData.tasks.entities[props.taskId])
+  const task = useSelector(
+    (state: RootState) => state.tasks.domainData.tasks.entities[props.taskId]
+  )
   const [isTitleEdit, setIsTitleEdit] = useState(false)
   const [inputTaskTitle, setInputTaskTitle] = useState(task?.title)
   const dispatch = useDispatch()
@@ -57,7 +53,9 @@ const TaskItemComponent = (props: Props) => {
         <div className="text-sm">
           更新日:{dayjs(task?.updatedAt).format('YYYY年MM月DD日HH時mm分ss秒')}
         </div>
-        {task?.todos.map((todoId) => <TodoItemComponent taskId={props.taskId} todoId={todoId}/> )}
+        {task?.todos.map((todoId) => (
+          <TodoItemComponent taskId={props.taskId} todoId={todoId} />
+        ))}
       </li>
     </div>
   )
